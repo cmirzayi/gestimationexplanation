@@ -1,0 +1,49 @@
+---
+title: "G-Estimation Explanation"
+output: github_document
+---
+
+# Conditional Exchangeability
+The most important concept to understand in G-Estimation is this one:
+
+$Y^{a} \perp\!\!\!\perp A|L$
+
+This equation seems confusing but it's just the mathematical form of condition exchangeability. It says the counterfactual outcome $Y^{a}$ is independent of the actual treatment (A) given the same covariates (L).
+
+
+#An example
+Now if we had a logistic regression model of the outcome with the counterfactual outcome and covariates as predictors:
+
+$logitPr[A=1|Y^{a=0},L]=\theta_{0} + \theta_{1}Y^{a=0} + \theta_{2}L$  
+We can never actually fit this model because we do not know $Y^{a=0}$ for all participants (we do know it for _some_ participants, but other participants received the treatment and therefore $a=1$ for them).  
+
+Because we know that $Y^{a=0}$ should be independent of A (given L) then we know that $\theta_{1}$ should be equal to 0. Therefore, we need to find a value for $Y^{a=0}$ where $\theta_{1}=0$.  
+
+# Finding $\theta_{1}=0$
+
+$E[Y^{a}-Y^{a=0}|A=a,L] = \beta_{1}a$
+$E[Y^{a}-Y^{a=0}|A_{1}L] = \beta_{1}a$
+
+Again this appears to be complicated but it's just a statement of the average causal effect in a structural nested mean model. The assumption is that the treatment effect $\beta_{1}$ will be the same for observations with the same $L$.  
+
+This equation is for the study population--it's the average causal effect, but we can write it for an individual too:  
+
+$Y^{a}-Y^{a=0} = \gamma_{1}a$  
+
+Using this formula we can use basic algebra to rewrite it:
+
+$Y^{a=0} = Y^{a}-\gamma_{1}a$  
+$Y^{a=0} = Y-\gamma_{1}A$  
+
+We don't know $\gamma_{1}$ though. This is the counterfactual outcome for an observation so we can't really ever know it.
+
+$H(\gamma_{1}=0) = Y - 0*A$  
+Systematically plugin values for $\gamma$ until $H(\gamma)=0$.
+
+
+
+
+```{r}
+
+```
+
